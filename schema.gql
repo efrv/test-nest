@@ -1,0 +1,43 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+type CounterpartsEntity {
+  id: Float!
+  name: String!
+  code: String!
+}
+
+type Query {
+  counterparts: [CounterpartsEntity!]!
+  counterpart(id: Float!): CounterpartsEntity!
+}
+
+type Mutation {
+  createCounterparts(createData: CreateCounterpartsDto!): [CounterpartsEntity!]!
+  updateCounterparts(updateData: UpdateCounterpartsDto!): [CounterpartsEntity!]!
+  deleteCounterpart(deleteData: DeleteCounterpartDto!): CounterpartsEntity!
+}
+
+input CreateCounterpartsDto {
+  counterparts: [CreateCounterpartsElementDto!]!
+}
+
+input CreateCounterpartsElementDto {
+  name: String!
+  code: String!
+}
+
+input UpdateCounterpartsDto {
+  counterparts: [UpdateCounterpartsElementDto!]!
+}
+
+input UpdateCounterpartsElementDto {
+  id: Float!
+  name: String!
+  code: String!
+}
+
+input DeleteCounterpartDto {
+  id: Float!
+}

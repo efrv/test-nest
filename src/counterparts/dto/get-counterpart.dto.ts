@@ -1,8 +1,8 @@
+import { ArgsType, Field } from '@nestjs/graphql';
 import { IsNotEmpty, IsNumber } from 'class-validator';
-import { Field, InputType } from '@nestjs/graphql';
 
-@InputType()
-export class DeleteCounterpartDto {
+@ArgsType()
+export class GetCounterpartDto {
   @Field()
   @IsNotEmpty()
   @IsNumber()

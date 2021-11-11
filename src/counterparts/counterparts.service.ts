@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { CounterpartsEntity } from './counterparts.entity';
-import { Connection, DeleteResult, Repository } from 'typeorm';
+import { Connection, Repository } from 'typeorm';
 import { CreateCounterpartsDto } from './dto/create-counterparts.dto';
 import { UpdateCounterpartsDto } from './dto/update-counterparts.dto';
 import { DeleteCounterpartDto } from './dto/delete-counterpart.dto';
@@ -18,6 +18,9 @@ export class CounterpartsService {
     return this.counterpartRepository.find({ order: { id: 'DESC' } });
   }
 
+  getOne(id: number): Promise<CounterpartsEntity> {
+    return this.counterpartRepository.findOne({ where: { id } });
+  }
   async create(
     createCounterpartsDto: CreateCounterpartsDto,
   ): Promise<CounterpartsEntity[]> {
@@ -39,8 +42,14 @@ export class CounterpartsService {
 
     return await this.batchSave(toUpdateItems);
   }
-  delete(deleteCounterpartsDto: DeleteCounterpartDto): Promise<DeleteResult> {
-    return this.counterpartRepository.delete({ id: deleteCounterpartsDto.id });
+  async delete(
+    deleteCounterpartsDto: DeleteCounterpartDto,
+  ): Promise<CounterpartsEntity> {
+    const result = await this.counterpartRepository.findOne({
+      where: { id: deleteCounterpartsDto.id },
+    });
+    await this.counterpartRepository.delete({ id: deleteCounterpartsDto.id });
+    return result;
   }
 
   private async batchSave(
